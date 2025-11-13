@@ -2,7 +2,7 @@
 
 A Next.js application for testing and comparing Chrome extension performance using dual browser automation, powered by Kernel, Magnitude, and Vercel.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonkernel%2Fkernel-nextjs-template&project-name=kernel-nextjs-template&repository-name=kernel-nextjs-template&products=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22kernel%22%2C%22productSlug%22%3A%22kernel%22%2C%22protocol%22%3A%22other%22%7D%5D)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonkernel%2Fkernel-nextjs-extensions-demo&env=ANTHROPIC_API_KEY&project-name=kernel-nextjs-extensions-demo&repository-name=kernel-nextjs-extensions-demo&products=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22kernel%22%2C%22productSlug%22%3A%22kernel%22%2C%22protocol%22%3A%22other%22%7D%5D)
 
 ## Overview
 
@@ -116,8 +116,8 @@ Blocks and removes all images and videos from loaded web pages. Useful for testi
 
 1. **Select Extension**: Choose a Chrome extension from your Kernel account via the dropdown
 2. **Create Dual Browsers**: Click "Create Browsers" to provision two identical Kernel browsers in parallel:
-   - **Browser A**: Baseline browser (stealth mode enabled)
-   - **Browser B**: Same configuration + your selected Chrome extension
+   - **Standard Browser**: Baseline browser (stealth mode enabled)
+   - **Extended Browser**: Same configuration + your selected Chrome extension
 3. **Live Views**: Watch both browsers side-by-side in real-time through embedded iframes
 4. **Configure Automation Task**: Enter automation details using three substeps:
    - **1. Target Website**: The URL where the automation should start

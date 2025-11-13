@@ -399,7 +399,7 @@ export default function HomePage() {
                     size="sm"
                   >
                     {showBrowserA ? <Eye className="w-4 h-4 mr-2" /> : <EyeOff className="w-4 h-4 mr-2" />}
-                    Browser A
+                    Standard Browser
                   </Button>
                   <Button
                     variant={showBrowserB ? "default" : "outline"}
@@ -407,7 +407,7 @@ export default function HomePage() {
                     size="sm"
                   >
                     {showBrowserB ? <Eye className="w-4 h-4 mr-2" /> : <EyeOff className="w-4 h-4 mr-2" />}
-                    Browser B
+                    Extended Browser
                   </Button>
                   <Button
                     variant="destructive"
@@ -429,7 +429,7 @@ export default function HomePage() {
                       <div className="space-y-4">
                         <div className="flex items-center gap-2">
                           <CheckCircle2 className="w-5 h-5 text-green-600" />
-                          <span className="font-semibold">Browser A</span>
+                          <span className="font-semibold">Standard Browser</span>
                         </div>
                         <div className={`relative rounded-lg overflow-hidden border bg-black ${showBrowserA && showBrowserB ? 'h-[400px]' : 'h-[600px]'}`}>
                           <iframe
@@ -522,7 +522,7 @@ export default function HomePage() {
                         <div className="flex items-center gap-2">
                           <CheckCircle2 className="w-5 h-5 text-green-600" />
                           <span className="font-semibold">
-                            Browser B (w/ Ext: {browserSession.extensionName})
+                            Extended Browser ({browserSession.extensionName})
                           </span>
                         </div>
                         <div className={`relative rounded-lg overflow-hidden border bg-black ${showBrowserA && showBrowserB ? 'h-[400px]' : 'h-[600px]'}`}>
@@ -769,7 +769,7 @@ export default function HomePage() {
                                   ) : (
                                     <XCircle className="w-4 h-4 text-red-600" />
                                   )}
-                                  <span className="font-medium text-sm">Browser A</span>
+                                  <span className="font-medium text-sm">Standard Browser</span>
                                 </div>
 
                                 <div className="flex items-center gap-2">
@@ -816,7 +816,7 @@ export default function HomePage() {
                                     <XCircle className="w-4 h-4 text-red-600" />
                                   )}
                                   <span className="font-medium text-sm">
-                                    Browser B (w/ Ext)
+                                    Extended Browser
                                   </span>
                                 </div>
 
