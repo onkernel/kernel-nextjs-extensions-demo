@@ -3,9 +3,12 @@ import { startBrowserAgent } from "magnitude-core";
 import { z } from "zod";
 
 function normalizeUrl(url: string): string {
-  if (!url) return url;
+  if (!url) return "";
 
   const trimmed = url.trim();
+
+  // Return empty string if URL is blank after trimming
+  if (!trimmed) return "";
 
   // Check if URL already has a protocol
   if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
@@ -27,14 +30,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!url) {
-      return NextResponse.json(
-        { error: "url is required" },
-        { status: 400 }
-      );
-    }
-
-    // Normalize URL to ensure it has a protocol
+    // Normalize URL to ensure it has a protocol (or empty string if blank)
     const normalizedUrl = normalizeUrl(url);
 
     if (!taskAction) {
@@ -120,7 +116,10 @@ async function runMagnitudeAutomation(
     // Execute the user's natural language task
     let result = "";
     try {
-      await agent.nav(startingUrl);
+      // Only navigate if a starting URL is provided
+      if (startingUrl) {
+        await agent.nav(startingUrl);
+      }
       await agent.act([taskAction]);
 
       // Extract structured output with result
