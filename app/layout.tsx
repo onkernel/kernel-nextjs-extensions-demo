@@ -5,8 +5,8 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Kernel + Vercel Template",
-  description: "Example Next.js app showing how to use Kernel SDK with Playwright in Vercel functions",
+  title: "Chrome Extension Testing with Kernel",
+  description: "Test and compare Chrome extensions using dual browser automation with Kernel, Magnitude, and Claude",
 };
 
 export default function RootLayout({
