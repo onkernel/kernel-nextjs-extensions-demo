@@ -58,9 +58,9 @@ export default function HomePage() {
   const [runningB, setRunningB] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [deployUrl, setDeployUrl] = useState<string | null>(null);
-  const [targetUrl, setTargetUrl] = useState("https://www.onkernel.com/docs/careers/intro");
-  const [taskAction, setTaskAction] = useState("Navigate to the careers page and find information about Customer Engineer positions.");
-  const [taskExtraction, setTaskExtraction] = useState("Extract the key qualifications and responsibilities for the Customer Engineer role.");
+  const [targetUrl, setTargetUrl] = useState("https://www.ycombinator.com/companies");
+  const [taskAction, setTaskAction] = useState("Look up PagerDuty and click into the company page.");
+  const [taskExtraction, setTaskExtraction] = useState("Extract their Team Size.");
   const [selectedModel, setSelectedModel] = useState("claude-sonnet-4-5-20250929");
   const [showBrowserA, setShowBrowserA] = useState(true);
   const [showBrowserB, setShowBrowserB] = useState(true);
