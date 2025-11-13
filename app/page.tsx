@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardAction } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Loader2, CheckCircle2, XCircle, Clock, Activity, Eye, EyeOff, Puzzle, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -391,54 +391,40 @@ export default function HomePage() {
             {/* Dual Browser Live Views and Automation Controls */}
             {browserSession && (
               <div className="space-y-6">
-                {/* Browser Visibility Controls */}
-                <div className="flex flex-wrap justify-center gap-3">
-                  <Button
-                    variant={showBrowserA ? "default" : "outline"}
-                    onClick={() => setShowBrowserA(!showBrowserA)}
-                    size="sm"
-                  >
-                    {showBrowserA ? <Eye className="w-4 h-4 mr-2" /> : <EyeOff className="w-4 h-4 mr-2" />}
-                    Standard Browser
-                  </Button>
-                  <Button
-                    variant={showBrowserB ? "default" : "outline"}
-                    onClick={() => setShowBrowserB(!showBrowserB)}
-                    size="sm"
-                  >
-                    {showBrowserB ? <Eye className="w-4 h-4 mr-2" /> : <EyeOff className="w-4 h-4 mr-2" />}
-                    Extended Browser
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    onClick={resetBrowsers}
-                    size="sm"
-                  >
-                    Reset Browsers
-                  </Button>
-                </div>
-
                 {/* Side-by-Side Live Views */}
-                <div className={`grid gap-6 ${
-                  showBrowserA && showBrowserB ? 'md:grid-cols-2' : 'md:grid-cols-1'
-                }`}>
+                <div className={`grid gap-6 ${showBrowserA && showBrowserB ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
                   {/* Browser A */}
-                  {showBrowserA && (
-                  <Card>
-                    <CardContent>
-                      <div className="space-y-4">
+                  <Card className={`transition-all duration-300 ${!showBrowserA ? 'order-2' : ''}`}>
+                    <CardHeader>
+                      <CardTitle>
                         <div className="flex items-center gap-2">
                           <CheckCircle2 className="w-5 h-5 text-green-600" />
-                          <span className="font-semibold">Standard Browser</span>
+                          <span>Standard Browser</span>
                         </div>
-                        <div className={`relative rounded-lg overflow-hidden border bg-black ${showBrowserA && showBrowserB ? 'h-[400px]' : 'h-[600px]'}`}>
-                          <iframe
-                            src={browserSession.browserA.liveViewUrl}
-                            className="absolute top-0 left-0 w-full h-full"
-                            allow="camera; microphone; display-capture"
-                            title="Browser A Live View"
-                          />
-                        </div>
+                      </CardTitle>
+                      <CardAction>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setShowBrowserA(!showBrowserA)}
+                          className="h-8 w-8 p-0"
+                        >
+                          {showBrowserA ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                        </Button>
+                      </CardAction>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {showBrowserA && (
+                          <div className={`relative rounded-lg overflow-hidden border bg-black ${showBrowserA && showBrowserB ? 'h-[400px]' : 'h-[600px]'}`}>
+                            <iframe
+                              src={browserSession.browserA.liveViewUrl}
+                              className="absolute top-0 left-0 w-full h-full"
+                              allow="camera; microphone; display-capture"
+                              title="Browser A Live View"
+                            />
+                          </div>
+                        )}
                         <div className="text-left text-sm space-y-2">
                           <div>
                             <p className="text-muted-foreground">Browser Spin-Up Time</p>
@@ -512,27 +498,39 @@ export default function HomePage() {
                       </div>
                     </CardContent>
                   </Card>
-                  )}
 
                   {/* Browser B (with Extension) */}
-                  {showBrowserB && (
-                  <Card>
-                    <CardContent>
-                      <div className="space-y-4">
+                  <Card className={`transition-all duration-300 ${!showBrowserB ? 'order-2' : ''}`}>
+                    <CardHeader>
+                      <CardTitle>
                         <div className="flex items-center gap-2">
                           <CheckCircle2 className="w-5 h-5 text-green-600" />
-                          <span className="font-semibold">
-                            Extended Browser ({browserSession.extensionName})
-                          </span>
+                          <span>Extended Browser ({browserSession.extensionName})</span>
                         </div>
-                        <div className={`relative rounded-lg overflow-hidden border bg-black ${showBrowserA && showBrowserB ? 'h-[400px]' : 'h-[600px]'}`}>
-                          <iframe
-                            src={browserSession.browserB.liveViewUrl}
-                            className="absolute top-0 left-0 w-full h-full"
-                            allow="camera; microphone; display-capture"
-                            title="Browser B Live View"
-                          />
-                        </div>
+                      </CardTitle>
+                      <CardAction>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setShowBrowserB(!showBrowserB)}
+                          className="h-8 w-8 p-0"
+                        >
+                          {showBrowserB ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                        </Button>
+                      </CardAction>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {showBrowserB && (
+                          <div className={`relative rounded-lg overflow-hidden border bg-black ${showBrowserA && showBrowserB ? 'h-[400px]' : 'h-[600px]'}`}>
+                            <iframe
+                              src={browserSession.browserB.liveViewUrl}
+                              className="absolute top-0 left-0 w-full h-full"
+                              allow="camera; microphone; display-capture"
+                              title="Browser B Live View"
+                            />
+                          </div>
+                        )}
                         <div className="text-left text-sm space-y-2">
                           <div>
                             <p className="text-muted-foreground">Browser Spin-Up Time</p>
@@ -606,14 +604,24 @@ export default function HomePage() {
                       </div>
                     </CardContent>
                   </Card>
-                  )}
                 </div>
 
                 {/* Automation Controls */}
                 <Card>
+                  <CardHeader>
+                    <CardTitle>Run AI-Powered Automation</CardTitle>
+                    <CardAction>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={resetBrowsers}
+                      >
+                        Reset Browsers
+                      </Button>
+                    </CardAction>
+                  </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-left">Run AI-Powered Automation</h3>
 
                       <div className="space-y-2 text-left">
                         <label htmlFor="target-url" className="text-sm font-medium">
@@ -894,7 +902,7 @@ export default function HomePage() {
                     <div className="text-2xl font-bold">3.</div>
                     <h3 className="font-semibold">Run AI Automation</h3>
                     <p className="text-sm text-muted-foreground">
-                      Use <Link className="underline" href="https://docs.magnitude.run">the Magnitude SDK</Link> to execute natural language tasks and compare results
+                      Use the <Link className="underline" href="https://docs.magnitude.run">Magnitude SDK</Link> to execute natural language tasks and compare results
                     </p>
                   </div>
                 </CardContent>
