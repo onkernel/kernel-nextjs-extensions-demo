@@ -632,7 +632,7 @@ export default function HomePage() {
                           type="url"
                           value={targetUrl}
                           onChange={(e) => setTargetUrl(e.target.value)}
-                          placeholder="https://onkernel.com"
+                          placeholder="https://www.ycombinator.com/companies"
                           disabled={runningAutomation}
                         />
                       </div>
@@ -645,7 +645,7 @@ export default function HomePage() {
                           id="task-action"
                           value={taskAction}
                           onChange={(e) => setTaskAction(e.target.value)}
-                          placeholder="Navigate to the careers page and find information about Customer Engineer positions"
+                          placeholder="Look up PagerDuty and click into the company page."
                           disabled={runningAutomation}
                           rows={3}
                           className="w-full px-3 py-2 border rounded-md bg-background resize-none"
@@ -663,7 +663,7 @@ export default function HomePage() {
                           id="task-extraction"
                           value={taskExtraction}
                           onChange={(e) => setTaskExtraction(e.target.value)}
-                          placeholder="Extract the key qualifications and responsibilities for the role"
+                          placeholder="Extract their Team Size."
                           disabled={runningAutomation}
                           rows={3}
                           className="w-full px-3 py-2 border rounded-md bg-background resize-none"
