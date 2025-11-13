@@ -2,8 +2,6 @@
 
 A Next.js application for testing and comparing Chrome extension performance using dual browser automation, powered by Kernel, Magnitude, and Vercel.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonkernel%2Fkernel-nextjs-extensions-demo&env=ANTHROPIC_API_KEY&project-name=kernel-nextjs-extensions-demo&repository-name=kernel-nextjs-extensions-demo&products=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22kernel%22%2C%22productSlug%22%3A%22kernel%22%2C%22protocol%22%3A%22other%22%7D%5D)
-
 ## Overview
 
 This application demonstrates how to:
@@ -161,6 +159,14 @@ lib/
 
 - `KERNEL_API_KEY` - Your Kernel API key (automatically added via Kernel integration)
 - `ANTHROPIC_API_KEY` - Your Anthropic API key for Magnitude/Claude
+
+### Troubleshooting
+
+- **Using the Deploy button**: The Deploy button utilizes the official Kernel Integration on the Vercel Marketplace, which creates a new Vercel-managed Kernel Organization for you. You will need to add your Chrome extensions to this newly created organization. You can use `kernel login --force` to reauthenticate with the correct organization.
+
+- **Using your existing Kernel organization**: If you want to use your existing Kernel organization (for example, if you're already on a paid tier required to use Chrome Extensions), you should deploy separately (on Vercel or your preferred method) and manually set the `ANTHROPIC_API_KEY` and `KERNEL_API_KEY` environment variables for the deployment.
+
+- **Running locally**: Alternatively, you can run the app locally instead of deploying by following the [Getting Started](#getting-started) instructions above.
 
 ## Learn More
 
