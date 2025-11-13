@@ -1,24 +1,25 @@
-# Kernel + Vercel Template
+# Chrome Extension Performance Testing
 
-A Next.js template demonstrating how to run browser automations in Vercel serverless functions, powered by Kernel.
+A Next.js application for testing and comparing Chrome extension performance using dual browser automation, powered by Kernel, Magnitude, and Vercel.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonkernel%2Fkernel-nextjs-template&project-name=kernel-nextjs-template&repository-name=kernel-nextjs-template&products=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22kernel%22%2C%22productSlug%22%3A%22kernel%22%2C%22protocol%22%3A%22other%22%7D%5D)
 
 ## Overview
 
-This template shows how to:
+This application demonstrates how to:
 
-- Create cloud browsers with live view using the Kernel SDK
-- Connect automation frameworks to Kernel browsers via CDP
-- Run browser automations in Next.js API routes
-- Display live browser view and automation results in a modern Next.js UI
+- Select and load Chrome extensions from your Kernel account
+- Create dual cloud browsers (one with extension, one without) with live views
+- Run AI-powered automation tasks using Magnitude and Claude
+- Analyze the impact of Chrome extensions on browsing and automation tasks
 
 ## Tech Stack
 
 - **Framework**: Next.js 15 with App Router
 - **Styling**: Tailwind CSS v4
 - **UI Components**: shadcn/ui
-- **Browser Automation**: Kernel SDK + Playwright
+- **Browser Infrastructure**: Kernel SDK
+- **AI Automation**: Magnitude + Claude Sonnet/Haiku 4.5
 - **Package Manager**: Bun
 - **Deployment**: Vercel
 
@@ -28,8 +29,9 @@ This template shows how to:
 
 - Node.js 18+
 - [Bun](https://bun.sh) (package manager)
-- [Bun](https://bun.sh) (package manager)
-- A Kernel account and API key
+- A Kernel account and API key ([Get one here](https://dashboard.onkernel.com))
+- An Anthropic API key ([Get one here](https://console.anthropic.com))
+- Chrome extensions uploaded to your Kernel account
 - Vercel account (optional, for deployment)
 
 ### Installation
@@ -47,42 +49,84 @@ This template shows how to:
    bun install
    ```
 
-3. **Set up Kernel**:
+3. **Set up API keys**:
 
-   Get your Kernel API key from one of these sources:
+   - **Kernel API key**: Get from [Kernel Dashboard](https://dashboard.onkernel.com) or install the [Kernel integration](https://vercel.com/integrations/kernel) from Vercel Marketplace
+   - **Anthropic API key**: Get from [Anthropic Console](https://console.anthropic.com)
 
-   - **Option 1 (Recommended)**: Install the [Kernel integration](https://vercel.com/integrations/kernel) from the Vercel Marketplace
-   - **Option 2**: Get your API key from [https://dashboard.onkernel.com](https://dashboard.onkernel.com)
+4. **Upload Chrome extensions**:
 
-4. **Configure environment variables**:
+   Upload your Chrome extension to Kernel following the [extension documentation](https://www.onkernel.com/docs/browsers/extensions)
+
+5. **Configure environment variables**:
 
    Create a `.env` file:
 
    ```bash
-   touch .env.local
+   touch .env
    ```
 
-   Add your Kernel API key:
+   Add your API keys:
 
    ```
-   KERNEL_API_KEY=your_api_key_here
+   KERNEL_API_KEY=your_kernel_api_key_here
+   ANTHROPIC_API_KEY=your_anthropic_api_key_here
    ```
 
-5. **Run the development server**:
+6. **Run the development server**:
 
    ```bash
    bun dev
-   bun dev
    ```
 
-6. **Open** [http://localhost:3000](http://localhost:3000) in your browser
+7. **Open** [http://localhost:3000](http://localhost:3000) in your browser
+
+## Example Chrome Extensions
+
+This repository includes two sample Chrome extensions in the [`/extension-examples`](extension-examples/) directory that you can use to test the demo:
+
+### 1. Kernel Mode
+**Location**: [`/extension-examples/kernel-mode`](extension-examples/kernel-mode/)
+
+Replaces all images and videos on web pages with Kernel logos. Great for testing visual content modification and DOM manipulation performance.
+
+### 2. Remove Webpage Media
+**Location**: [`/extension-examples/remove-webpage-media`](extension-examples/remove-webpage-media/)
+
+Blocks and removes all images and videos from loaded web pages. Useful for testing page load performance.
+
+### How to Use These Extensions
+
+1. **Login to Kernel CLI**:
+   ```bash
+   kernel login
+   ```
+
+2. **Upload to Kernel via CLI**:
+   ```bash
+   kernel extensions upload ./extension-examples/kernel-mode --name kernel-mode
+   ```
+
+3. **Test in the demo**:
+   - Start the development server
+   - Select your uploaded extension from the dropdown
+   - Create dual browsers and run automation tasks to see the extension's impact
 
 ## How It Works
 
-1. **Browser Creation**: Click "Create Browser" to provision a headful Kernel browser with live view capabilities
-2. **Live View**: See your browser running in real-time through the embedded live view iframe
-3. **Automation**: Enter any URL and click "Run Automation" to navigate to it using Playwright over CDP
-4. **Results**: View execution metrics and page information returned from your automation
+1. **Select Extension**: Choose a Chrome extension from your Kernel account via the dropdown
+2. **Create Dual Browsers**: Click "Create Browsers" to provision two identical Kernel browsers in parallel:
+   - **Browser A**: Baseline browser (stealth mode enabled)
+   - **Browser B**: Same configuration + your selected Chrome extension
+3. **Live Views**: Watch both browsers side-by-side in real-time through embedded iframes
+4. **Configure Automation Task**: Enter automation details using three substeps:
+   - **1. Target Website**: The URL where the automation should start
+   - **2. Task Action**: What you want the AI agent to do (e.g., "Navigate to the careers page and find job listings")
+   - **3. Task Extraction**: What data to extract after completing the action (e.g., "Extract the job title and location for Customer Engineer positions")
+5. **Parallel Execution**: Magnitude agents run the same task on both browsers simultaneously using Claude Sonnet/Haiku 4.5
+   - The **Task Action** is passed to `agent.act()` to execute the browsing task
+   - The **Task Extraction** is passed to `agent.extract()` to extract structured data
+6. **Compare Results**: View execution times and extracted results side-by-side to see the extension's impact
 
 ## Code Structure
 
@@ -90,10 +134,12 @@ This template shows how to:
 app/
 ├── api/
 │   ├── create-browser/
-│   │   └── route.ts          # Creates a headful Kernel browser
+│   │   └── route.ts          # Creates dual Kernel browsers (with/without extension)
+│   ├── list-extensions/
+│   │   └── route.ts          # Fetches user's Chrome extensions from Kernel
 │   └── run-automation/
-│       └── route.ts          # Connects via CDP and runs automation
-├── page.tsx                  # Main UI with live view and controls
+│       └── route.ts          # Runs Magnitude AI agents on both browsers
+├── page.tsx                  # Main UI with dual live views and controls
 ├── layout.tsx                # Root layout
 └── globals.css               # Global styles
 
@@ -107,52 +153,6 @@ lib/
 └── utils.ts                  # Utility functions
 ```
 
-### Key Code Example
-
-**Step 1: Create Browser** (`app/api/create-browser/route.ts`)
-
-```typescript
-import { Kernel } from "@onkernel/sdk";
-
-// Initialize Kernel client
-const kernel = new Kernel({ apiKey: process.env.KERNEL_API_KEY });
-
-// Create a headful browser with live view
-const browser = await kernel.browsers.create({
-  stealth: true,
-  headless: false,
-});
-
-// Return browser details to client
-return {
-  sessionId: browser.session_id,
-  liveViewUrl: browser.browser_live_view_url,
-  cdpWsUrl: browser.cdp_ws_url,
-};
-```
-
-**Step 2: Run Automation** (`app/api/run-automation/route.ts`)
-
-```typescript
-import { chromium } from "playwright-core";
-
-// Connect Playwright to the Kernel browser via CDP
-const browser = await chromium.connectOverCDP(cdpWsUrl);
-
-// Get the default context and page
-const context = browser.contexts()[0];
-const page = context.pages()[0] || (await context.newPage());
-
-// Navigate and extract data
-await page.goto(url, { waitUntil: "domcontentloaded" });
-const title = await page.title();
-
-// Close Playwright connection (browser continues running)
-await browser.close();
-
-return { title, url };
-```
-
 ## Deployment
 
 ### Deploy to Vercel
@@ -163,26 +163,30 @@ return { title, url };
 
    - Go to [vercel.com](https://vercel.com)
    - Import your GitHub repository
-   - Add your `KERNEL_API_KEY` environment variable
+   - Add environment variables (see below)
    - Deploy!
 
 3. **Using Vercel Marketplace Integration**:
    - Install [Kernel from Vercel Marketplace](https://vercel.com/integrations/kernel)
-   - The integration will automatically add the API key to your project
+   - The integration will automatically add the Kernel API key to your project
+   - Manually add your Anthropic API key
    - Deploy your project
 
 ### Environment Variables
 
-Make sure to add this environment variable in your Vercel project settings:
+Make sure to add these environment variables in your Vercel project settings:
 
 - `KERNEL_API_KEY` - Your Kernel API key
+- `ANTHROPIC_API_KEY` - Your Anthropic API key for Magnitude/Claude
 
 ## Learn More
 
 - [Kernel Documentation](https://docs.onkernel.com)
-- [Kernel API Reference](https://docs.onkernel.com/api-reference)
+- [Kernel Extensions API](https://www.onkernel.com/docs/browsers/extensions)
+- [Magnitude Documentation](https://docs.magnitude.run)
+- [Magnitude + Kernel Integration](https://docs.magnitude.run/integrations/kernel)
 - [Next.js Documentation](https://nextjs.org/docs)
 
 ---
 
-Built with [Kernel](https://dashboard.onkernel.com) and [Vercel](https://vercel.com)
+Built with [Kernel](https://dashboard.onkernel.com), [Magnitude](https://docs.magnitude.run), and [Vercel](https://vercel.com)
