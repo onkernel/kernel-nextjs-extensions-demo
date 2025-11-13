@@ -155,28 +155,11 @@ lib/
 
 ## Deployment
 
-### Deploy to Vercel
-
-1. **Push to GitHub**
-
-2. **Connect to Vercel**:
-
-   - Go to [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Add environment variables (see below)
-   - Deploy!
-
-3. **Using Vercel Marketplace Integration**:
-   - Install [Kernel from Vercel Marketplace](https://vercel.com/integrations/kernel)
-   - The integration will automatically add the Kernel API key to your project
-   - Manually add your Anthropic API key
-   - Deploy your project
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonkernel%2Fkernel-nextjs-extensions-demo&env=ANTHROPIC_API_KEY&project-name=kernel-nextjs-extensions-demo&repository-name=kernel-nextjs-extensions-demo&products=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22kernel%22%2C%22productSlug%22%3A%22kernel%22%2C%22protocol%22%3A%22other%22%7D%5D)
 
 ### Environment Variables
 
-Make sure to add these environment variables in your Vercel project settings:
-
-- `KERNEL_API_KEY` - Your Kernel API key
+- `KERNEL_API_KEY` - Your Kernel API key (automatically added via Kernel integration)
 - `ANTHROPIC_API_KEY` - Your Anthropic API key for Magnitude/Claude
 
 ## Learn More
