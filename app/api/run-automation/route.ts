@@ -98,12 +98,13 @@ async function runMagnitudeAutomation(
   model: string
 ) {
   const startTime = Date.now();
+  let agent;
 
   try {
     console.log(`Starting agent for URL: ${startingUrl}, Task Action: ${taskAction}, Task Extraction: ${taskExtraction}`);
 
     // Initialize Magnitude agent
-    const agent = await startBrowserAgent({
+    agent = await startBrowserAgent({
       browser: {
         cdp: cdpWsUrl,
       },
@@ -170,6 +171,15 @@ async function runMagnitudeAutomation(
       result: "",
       error: error instanceof Error ? error.message : String(error),
     };
+  } finally {
+    if (agent) {
+      try {
+        await agent.stop();
+        console.log("Agent cleaned up successfully");
+      } catch (cleanupError) {
+        console.error("Error cleaning up agent:", cleanupError);
+      }
+    }
   }
 }
 
